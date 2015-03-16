@@ -11,7 +11,7 @@ class ChrRace(models.Model):
     CCP Primary key: "raceID" tinyint(3)
     """
     id = models.IntegerField(unique=True, primary_key=True)
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=100)
     short_description = models.TextField(blank=True)
     description = models.TextField(blank=True)
     icon_id = models.IntegerField(blank=True, null=True)

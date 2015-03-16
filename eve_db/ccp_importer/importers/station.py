@@ -34,51 +34,13 @@ class Importer_staOperationServices(SQLImporter):
     model = StaOperationServices
     pks = (('operation', 'operationID'), ('service', 'serviceID'))
 
-
-class Importer_ramAssemblyLines(SQLImporter):
-    DEPENDENCIES = ['ramActivities', 'ramAssemblyLineTypes', 'staStations',
-                    'crpNPCCorporations']
-    model = RamAssemblyLine
-    pks = (('id', 'assemblyLineID'),)
-
-    def __init__(self, *args, **kwargs):
-        super(Importer_ramAssemblyLines, self).__init__(*args, **kwargs)
-        self.field_map = (('assembly_line_type_id', 'assemblyLineTypeID'),
-                 ('station_id', 'containerID'),
-                 ('owner_id', 'ownerID'),
-                 ('activity_id', 'activityID'),
-                 ('name', 'assemblyLineTypeID', self.get_assembly_line_type_name),
-                 ('ui_grouping_id', 'UIGroupingID'),
-                 ('cost_install', 'costInstall'),
-                 ('cost_per_hour', 'costPerHour'),
-                 ('discount_per_good_standing_point', 'discountPerGoodStandingPoint'),
-                 ('surcharge_per_bad_standing_point', 'surchargePerBadStandingPoint'),
-                 ('minimum_standing', 'minimumStanding'),
-                 ('minimum_char_security', 'minimumCharSecurity'),
-                 ('minimum_corp_security', 'minimumCorpSecurity'),
-                 ('maximum_char_security', 'maximumCharSecurity'),
-                 ('maximum_corp_security', 'maximumCorpSecurity'),
-                 ('next_free_time', 'nextFreeTime'),
-                 ('restriction_mask', 'restrictionMask'))
-
-        # Retrieve and store all assembly type names by ID
-        self.assembly_line_type_names = {}
-        for type_id, name in (keyvalue for keyvalue in RamAssemblyLineType.objects.all().values_list('id', 'name')):
-            self.assembly_line_type_names[type_id] = name
-
-    def get_assembly_line_type_name(self, type_id):
-#        return RamAssemblyLineType.objects.get(id=type_id).name
-        return self.assembly_line_type_names.get(type_id)
-
-
 class Importer_ramAssemblyLineTypeDetailPerCategory(SQLImporter):
     DEPENDENCIES = ['ramAssemblyLineTypes', 'invCategories']
     model = RamAssemblyLineTypeDetailPerCategory
     pks = (('assembly_line_type', 'assemblyLineTypeID'),
            ('category', 'categoryID'))
     field_map = (('time_multiplier', 'timeMultiplier'),
-                 ('material_multiplier', 'materialMultiplier'))
-
+                 ('material_multiplier', 'materialMultiplier'), ('cost_multiplier', 'costMultiplier'))
 
 class Importer_ramAssemblyLineTypeDetailPerGroup(SQLImporter):
     DEPENDENCIES = ['ramAssemblyLineTypes', 'invGroups']
@@ -86,7 +48,7 @@ class Importer_ramAssemblyLineTypeDetailPerGroup(SQLImporter):
     pks = (('assembly_line_type', 'assemblyLineTypeID'),
            ('group', 'groupID'))
     field_map = (('time_multiplier', 'timeMultiplier'),
-                 ('material_multiplier', 'materialMultiplier'))
+                 ('material_multiplier', 'materialMultiplier'), ('cost_multiplier', 'costMultiplier'))
 
 
 class Importer_staServices(SQLImporter):
@@ -149,14 +111,14 @@ class Importer_ramAssemblyLineStations(SQLImporter):
                  ('quantity', 'quantity'))
 
 
-class Importer_ramTypeRequirements(SQLImporter):
-    DEPENDENCIES = ['invTypes', 'ramActivities']
-    model = RamTypeRequirement
-    pks = (('type', 'typeID'), ('activity_type', 'activityID'),
-           ('required_type', 'requiredTypeID'))
-    field_map = (('quantity', 'quantity'),
-                 ('damage_per_job', 'damagePerJob'),
-                 ('recycle', 'recycle', parse_int_bool))
+#class Importer_ramTypeRequirements(SQLImporter):
+#    DEPENDENCIES = ['invTypes', 'ramActivities']
+#    model = RamTypeRequirement
+#    pks = (('type', 'typeID'), ('activity_type', 'activityID'),
+#           ('required_type', 'requiredTypeID'))
+#    field_map = (('quantity', 'quantity'),
+#                 ('damage_per_job', 'damagePerJob'),
+#                 ('recycle', 'recycle', parse_int_bool))
 
 
 class Importer_staStations(SQLImporter):

@@ -72,10 +72,6 @@ class InvContrabandTypeAdmin(admin.ModelAdmin):
                     'confiscate_min_sec', 'attack_min_sec', 'fine_by_value')
 admin.site.register(InvContrabandType, InvContrabandTypeAdmin)
 
-class InvBlueprintTypeAdmin(admin.ModelAdmin):
-    list_display = ('blueprint_type', 'product_type', 'tech_level')
-admin.site.register(InvBlueprintType, InvBlueprintTypeAdmin)
-
 class InvItemAdmin(admin.ModelAdmin):
     list_display = ('id', 'type', 'owner', 'location', 'flag', 'quantity')
 admin.site.register(InvItem, InvItemAdmin)
@@ -92,11 +88,11 @@ class RamActivityAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'description', 'icon_filename', 'is_published')
 admin.site.register(RamActivity, RamActivityAdmin)
 
-class RamAssemblyLineAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'station', 'owner', 'activity',
-                    'minimum_char_security', 'cost_per_hour', 'next_free_time',
-                    'restriction_mask')
-admin.site.register(RamAssemblyLine, RamAssemblyLineAdmin)
+#class RamAssemblyLineAdmin(admin.ModelAdmin):
+#    list_display = ('id', 'name', 'station', 'owner', 'activity',
+#                    'minimum_char_security', 'cost_per_hour', 'next_free_time',
+#                    'restriction_mask')
+#admin.site.register(RamAssemblyLine, RamAssemblyLineAdmin)
 
 class RamAssemblyLineStationsAdmin(admin.ModelAdmin):
     list_display = ('id', 'station', 'assembly_line_type', 'quantity',
@@ -111,13 +107,13 @@ admin.site.register(RamAssemblyLineType, RamAssemblyLineTypeAdmin)
 
 class RamAssemblyLineTypeDetailPerCategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'assembly_line_type', 'category',
-                    'time_multiplier', 'material_multiplier')
+                    'time_multiplier', 'material_multiplier', 'cost_multiplier')
 admin.site.register(RamAssemblyLineTypeDetailPerCategory,
                     RamAssemblyLineTypeDetailPerCategoryAdmin)
 
 class RamAssemblyLineTypeDetailPerGroupAdmin(admin.ModelAdmin):
     list_display = ('id', 'assembly_line_type', 'group',
-                    'time_multiplier', 'material_multiplier')
+                    'time_multiplier', 'material_multiplier', 'cost_multiplier')
 admin.site.register(RamAssemblyLineTypeDetailPerGroup,
                     RamAssemblyLineTypeDetailPerGroupAdmin)
 
