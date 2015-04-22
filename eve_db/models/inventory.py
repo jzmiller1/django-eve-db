@@ -41,7 +41,10 @@ class InvMarketGroup(models.Model):
     id = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=300012, blank=True, null=True)
-    parent = models.ForeignKey('InvMarketGroup', blank=True, null=True)
+    parent = models.ForeignKey('InvMarketGroup',
+                               blank=True,
+                               null=True,
+                               related_name='subgroups')
     has_items = models.BooleanField(default=True)
     icon_id = models.IntegerField(blank=True, null=True)
 
@@ -65,6 +68,25 @@ class InvMarketGroup(models.Model):
             return self.parent.full_name() + delimiter + self.name
         else:
             return self.name
+
+    @property
+    def items(self):
+        """Returns all items of the current group."""
+        if not self.has_items:
+            return InvType.objects.none()
+        return InvType.objects.filter(market_group_id=self.id)
+
+    @property
+    def items_all(self):
+        """Returns all items of the current group and all subgroups."""
+        items = []
+        children = self.subgroups.all()
+        if children.exists():
+            for group in children:
+                items += group.items
+                if group.subgroups.all().exists():
+                    items += group.items_all
+        return items
 
 class InvCategory(models.Model):
     """
