@@ -80,6 +80,7 @@ class InvMarketGroup(models.Model):
     def items_all(self):
         """Returns all items of the current group and all subgroups."""
         items = []
+        items += self.items
         children = self.subgroups.all()
         if children.exists():
             for group in children:
