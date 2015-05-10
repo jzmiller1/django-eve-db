@@ -51,9 +51,20 @@ class SQLImporter(object):
         batch_size = 1000
         self.itercount = 0
         query_string = 'SELECT * FROM %s' % self.table_name
-
         try:
-            for new_obj, insert in (self.import_row(row) for row in self.cursor.execute(query_string)):
+            data = self.cursor.execute(query_string)
+            if hasattr(self, 'HIERARCHY_FIELD'):
+                insert_order = []
+                ids = []
+                self.cursor.execute("""SELECT * FROM {0} WHERE {1} is NULL;""".format(self.table_name, self.HIERARCHY_FIELD))
+                market_ids, insert_order = self.hierarchy_load(self.cursor.fetchall(), ids, insert_order)
+                for id_value in ids:
+                    self.cursor.execute("""SELECT * FROM {0} WHERE {1}=?;""".format(self.table_name, self.HIERARCHY_FIELD),
+                                        (id_value,))
+                    ids, insert_order = self.hierarchy_load(self.cursor.fetchall(), ids, insert_order)
+                data = insert_order
+
+            for new_obj, insert in (self.import_row(row) for row in data):
                 # Now we have either a new model instance, an existing model
                 # instance with updated fields or None == skip
                 if new_obj:
@@ -174,6 +185,13 @@ class SQLImporter(object):
         """
         return self.__class__.__name__.split('_')[1]
 
+    @staticmethod
+    def hierarchy_load(data, ids, insert_order):
+        for row in data:
+            ids.append(row[0])
+            if row not in insert_order:
+                insert_order.append(row)
+        return ids, insert_order
 
 def parse_int_bool(int_bool):
     """

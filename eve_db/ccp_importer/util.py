@@ -71,10 +71,16 @@ IMPORT_LIST = [
     Importer_ramAssemblyLineStations,
     Importer_agtAgents,
     Importer_agtResearchAgents,
-#    Importer_ramTypeRequirements,
     Importer_planetSchematics,
     Importer_planetSchematicsPinMap,
-    Importer_planetSchematicsTypeMap
+    Importer_planetSchematicsTypeMap,
+    Importer_industryBlueprints,
+    Importer_industryActivity,
+    Importer_industryActivityMaterials,
+    Importer_industryActivityProbabilities,
+    Importer_industryActivityProducts,
+    Importer_industryActivitySkills,
+    Importer_invVolumes,
 ]
 
 def order_importers(importer_classes):

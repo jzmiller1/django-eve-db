@@ -47,6 +47,8 @@ class Importer_invMetaGroups(SQLImporter):
 
 class Importer_invMarketGroups(SQLImporter):
     DEPENDENCIES = ['invMarketGroups']
+    HIERARCHY_FIELD = 'parentGroupID'
+    ID_FIELD = 'marketGroupID'
     model = InvMarketGroup
     pks = (('id', 'marketGroupID'),)
     field_map = (('name', 'marketGroupName'),
@@ -230,3 +232,11 @@ class Importer_invUniqueNames(SQLImporter):
     pks = (('id', 'itemID'),)
     field_map = (('name', 'itemName'),
                  ('group_id', 'groupID'))
+
+class Importer_invVolumes(SQLImporter):
+    DEPENDENCIES = ['invTypes',]
+    model = InvVolume
+    pks = (('id', 'typeID'),)
+    field_map = (('type_id', 'typeID'),
+                 ('volume', 'volume'),
+                 )

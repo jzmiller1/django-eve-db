@@ -54,46 +54,6 @@ class RamAssemblyLineType(models.Model):
     def __str__(self):
         return self.__unicode__()
 
-#class RamAssemblyLine(models.Model):
-#    """
-#    These represent individual assembly lines in stations.
-#
-#    CCP Table: ramAssemblyLines
-#    CCP Primary key: "assemblyLineID" int(11)
-#    """
-#    id = models.IntegerField(unique=True, primary_key=True)
-#    # Just a denormalized assembly_line_type.name.
-#    name = models.CharField(max_length=255, blank=True)
-#    assembly_line_type = models.ForeignKey(RamAssemblyLineType, blank=True,
-#                                           null=True)
-#    station = models.ForeignKey('StaStation', blank=True, null=True)
-#    ui_grouping_id = models.IntegerField(blank=True, null=True)
-#    cost_install = models.FloatField(blank=True, null=True)
-#    cost_per_hour = models.FloatField(blank=True, null=True)
-#    discount_per_good_standing_point = models.FloatField(blank=True, null=True)
-#    surcharge_per_bad_standing_point = models.FloatField(blank=True, null=True)
-#    minimum_standing = models.FloatField(blank=True, null=True)
-#    minimum_char_security = models.FloatField(blank=True, null=True)
-#    minimum_corp_security = models.FloatField(blank=True, null=True)
-#    maximum_char_security = models.FloatField(blank=True, null=True)
-#    maximum_corp_security = models.FloatField(blank=True, null=True)
-#    owner = models.ForeignKey('CrpNPCCorporation', blank=True, null=True)
-#    activity = models.ForeignKey('RamActivity', blank=True, null=True)
-#    next_free_time = models.DateTimeField(blank=True, null=True)
-#    restriction_mask = models.IntegerField(blank=True, null=True)
-#
-#    class Meta:
-#        app_label = 'eve_db'
-#        ordering = ['id']
-#        verbose_name = 'Assembly Line'
-#        verbose_name_plural = 'Assembly Lines'
-#
-#    def __unicode__(self):
-#        return self.assembly_line_type
-#
-#    def __str__(self):
-#        return self.__unicode__()
-
 class RamAssemblyLineTypeDetailPerCategory(models.Model):
     """
     Assembly line multipliers per produced item category.
@@ -173,32 +133,6 @@ class RamAssemblyLineStations(models.Model):
 
     def __str__(self):
         return self.__unicode__()
-
-#class RamTypeRequirement(models.Model):
-#    """
-#    CCP Table: ramTypeRequirements
-#    CCP Primary key: ("typeID" smallint(6), "activityID" tinyint(3), "requiredTypeID" smallint(6))
-#    """
-#    type = models.ForeignKey('InvType', related_name='type_requirement')
-#    activity_type = models.ForeignKey('RamActivity')
-#    required_type = models.ForeignKey('InvType', related_name='required_type')
-#    quantity = models.IntegerField(blank=True, null=True)
-#    damage_per_job = models.FloatField(blank=True, null=True)
-#    recycle = models.BooleanField(blank=True, default=True)
-#
-#    class Meta:
-#        app_label = 'eve_db'
-#        ordering = ['id']
-#        verbose_name = 'Type Requirement'
-#        verbose_name_plural = 'Type Requirements'
-#        unique_together = ('type', 'activity_type', 'required_type')
-#
-#    def __unicode__(self):
-#        return "%s: %s (%s)" % (self.type.name, self.required_type.name, self.activity_type.name)
-#
-#    def __str__(self):
-#        return self.__unicode__()
-
 
 class StaService(models.Model):
     """

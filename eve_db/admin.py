@@ -41,6 +41,10 @@ class InvTypeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'group', 'market_group', 'description')
 admin.site.register(InvType, InvTypeAdmin)
 
+class InvTypeMaterialAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'material_type', 'quantity',)
+admin.site.register(InvTypeMaterial, InvTypeMaterialAdmin)
+
 class InvFlagAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'text', 'order')
 admin.site.register(InvFlag, InvFlagAdmin)
@@ -288,3 +292,31 @@ admin.site.register(PlanetSchematicsPinMap, PlanetSchematicsPinMapAdmin)
 class PlanetSchematicsTypeMapAdmin(admin.ModelAdmin):
     list_display = ('id', 'schematic', 'type', 'quantity', 'is_input')
 admin.site.register(PlanetSchematicsTypeMap, PlanetSchematicsTypeMapAdmin)
+
+class IndustryBlueprintsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'maxProductionLimit')
+admin.site.register(IndustryBlueprints, IndustryBlueprintsAdmin)
+
+class IndustryActivityAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'time', 'activity')
+admin.site.register(IndustryActivity, IndustryActivityAdmin)
+
+class IndustryActivityMaterialAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'activity', 'material_type', 'quantity', 'consume')
+admin.site.register(IndustryActivityMaterial, IndustryActivityMaterialAdmin)
+
+class IndustryActivityProbabilityAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'activity', 'product_type', 'probability')
+admin.site.register(IndustryActivityProbability, IndustryActivityProbabilityAdmin)
+
+class IndustryActivityProductAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'activity', 'product_type', 'quantity')
+admin.site.register(IndustryActivityProduct, IndustryActivityProductAdmin)
+
+class IndustryActivitySkillAdmin(admin.ModelAdmin):
+    list_display = ('id', 'type', 'activity', 'skill', 'level')
+admin.site.register(IndustryActivitySkill, IndustryActivitySkillAdmin)
+
+class InvVolumeAdmin(admin.ModelAdmin):
+    list_display = ('type', 'volume',)
+admin.site.register(InvVolume, InvVolumeAdmin)

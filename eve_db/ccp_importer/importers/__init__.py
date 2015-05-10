@@ -5,3 +5,4 @@ from map import *
 from npc import *
 from station import *
 from planet import *
+from industry import *

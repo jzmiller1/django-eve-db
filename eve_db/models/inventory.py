@@ -665,3 +665,26 @@ class InvUniqueName(models.Model):
 
     def __str__(self):
         return self.__unicode__()
+
+class InvVolume(models.Model):
+    """
+    Contains packaged volumes for ships.
+
+    CCP Table: invVolumes
+    CCP Primary key: "typeID" smallint(6)
+    """
+    type = models.ForeignKey(InvType)
+    volume = models.FloatField(null=True)
+
+    class Meta:
+        app_label = 'eve_db'
+        ordering = ['id']
+        verbose_name = 'Inventory Volume'
+        verbose_name_plural = 'Inventory Volumes'
+
+    def __unicode__(self):
+        return "{} - {} m3".format(self.type.name, self.volume)
+
+    def __str__(self):
+        return self.__unicode__()
+
